@@ -1,26 +1,26 @@
 package com.example.arjun.bluetooth_communincatioon;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
-        import android.Manifest;
-        import android.bluetooth.BluetoothAdapter;
-        import android.bluetooth.BluetoothDevice;
-        import android.content.BroadcastReceiver;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.IntentFilter;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ListView;
-
-        import java.nio.charset.Charset;
-        import java.util.ArrayList;
-        import java.util.UUID;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
                 mBTDevices.add(device);
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
-                mDeviceListAdapter = new DeviceListAdapter(context, R.layout.decive_adapter_view, mBTDevices);
+                mDeviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, mBTDevices);
                 lvNewDevices.setAdapter(mDeviceListAdapter);
             }
         }
@@ -276,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void btnDiscover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
 
@@ -308,6 +309,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      *
      * NOTE: This will only execute on versions > LOLLIPOP because it is not needed otherwise.
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void checkBTPermissions() {
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
